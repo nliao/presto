@@ -16,6 +16,7 @@ package com.facebook.presto.sql.planner;
 import com.facebook.presto.spi.ErrorCodeSupplier;
 import com.facebook.presto.spi.PrestoException;
 import com.facebook.presto.testing.LocalQueryRunner;
+import com.facebook.presto.testing.MaterializedResult;
 import com.google.common.base.Joiner;
 import org.intellij.lang.annotations.Language;
 import org.testng.annotations.AfterClass;
@@ -45,6 +46,22 @@ public class TestLocalExecutionPlanner
         String inner = "(" + Joiner.on(" + ").join(nCopies(100, "rand()")) + ")";
         String outer = Joiner.on(" + ").join(nCopies(100, inner));
         assertFails("SELECT " + outer, COMPILER_ERROR);
+    }
+
+    @Test
+    public void testSimpleSql() {
+        execute("SELECT 'ABC'");
+    }
+
+    @Test
+    public void testSimpleSql2() {
+        execute("SELECT 1+1*2");
+    }
+
+    private void execute(@Language("SQL") String sql) {
+        runner.printPlan();
+        MaterializedResult result = runner.execute(sql);
+        System.out.println(result);
     }
 
     private void assertFails(@Language("SQL") String sql, ErrorCodeSupplier supplier)

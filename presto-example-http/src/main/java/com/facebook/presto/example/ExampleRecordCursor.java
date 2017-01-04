@@ -108,6 +108,11 @@ public class ExampleRecordCursor
     {
         checkState(fields != null, "Cursor has not been advanced yet");
 
+        // ningliao:  To avoid IndexOutofRangeException
+        if(field >= fields.size()) {
+            return "";
+        }
+
         int columnIndex = fieldToColumnIndex[field];
         return fields.get(columnIndex);
     }

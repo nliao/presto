@@ -194,7 +194,7 @@ import static java.util.Objects.requireNonNull;
 import static java.util.concurrent.Executors.newCachedThreadPool;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
-public class LocalQueryRunner
+public class    LocalQueryRunner
         implements QueryRunner
 {
     private final Session defaultSession;
